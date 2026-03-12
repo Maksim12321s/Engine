@@ -7,8 +7,10 @@ class Engine{
     const char* vertexShaderSource = "#version 330 core\n"
                                  "layout (location = 0) in vec3 aPos;\n"
                                  "out vec4 vertexColor;"
+                                 "uniform mat4 projection;\n"
+                                 "uniform mat4 camera;\n"
                                  "void main(){\n"
-                                 "gl_Position = vec4(aPos,1.0);"
+                                 "gl_Position = projection*camera*vec4(aPos,1.0);"
                                  "vertexColor = vec4(1.0, 0.0, 0.0, 1.0);"
                                  "}\0";
     const char* fragmentShaderSource = "#version 330 core\n"
@@ -18,8 +20,8 @@ class Engine{
                                  "FragColor = vertexColor;"
                                  "}\0";
 
-    const unsigned int height;
-    const unsigned int width;
+    int height;
+    int width;
     unsigned int fragmentShader;
     unsigned int vertexShader;
     unsigned int ShaderProgram;
@@ -29,6 +31,7 @@ class Engine{
     public:
         void RunEngine();
         Engine(unsigned int height, unsigned int width, GLFWwindow * window);
+        void setNewSize(unsigned int,unsigned int);
     
 };
 

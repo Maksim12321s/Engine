@@ -1,6 +1,6 @@
 BUILD_DIR = build
 EXEC_PROG = engine
-.PHOPY: build clean run
+.PHOPY: build clean run rerun
 
 
 all: build
@@ -13,7 +13,9 @@ build:
 clean:
 	rm -rf $(BUILD_DIR)
 
+rebuild: clean build
+
 run: build
 		./$(BUILD_DIR)/engine
 
-rebuild: clean build
+rerun: clean run

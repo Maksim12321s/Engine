@@ -42,8 +42,8 @@ Sphere::Sphere(const Vec3& startCoords,unsigned int acc, double r) : Shape(start
     glBindVertexArray(VAO);
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER,VBO);
-    glBufferData(GL_ARRAY_BUFFER, coords->getSize() * sizeof(double), coords->getData(), GL_DYNAMIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_DOUBLE, GL_FALSE, 3 * sizeof(double), (void*)0);
+    glBufferData(GL_ARRAY_BUFFER, coords->getSize() * sizeof(float), coords->getData(), GL_DYNAMIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
     glEnableVertexAttribArray(0);
     glBindVertexArray(0);
