@@ -3,10 +3,11 @@
 #include "engine/perspective.h"
 #include "Matrix.h"
 #include "engine/camera.h"
+#include <iostream>
 
 using namespace shapes;
 
-Engine::Engine(unsigned int height, unsigned int width, GLFWwindow* window) : height(height), width(width), window(window){
+Engine::Engine(unsigned int height, unsigned int width, GLFWwindow* window) : height(height), width(width), window(window), firstMouse(true){
 
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader,1,&vertexShaderSource,NULL);
@@ -37,6 +38,8 @@ void Engine::RunEngine(){
     {   
     
         glfwGetWindowSize(window, &width, &height);
+        mouseCallBack();
+        camera.TurnCamera(dx,dy);
         if(glfwGetKey(window,GLFW_KEY_W) == GLFW_PRESS){
             camera.CameraMove('w');
         }
@@ -49,9 +52,10 @@ void Engine::RunEngine(){
         if(glfwGetKey(window,GLFW_KEY_D) == GLFW_PRESS){
             camera.CameraMove('d');
         }
+
         Vectors::Matrix LookAt = camera.CreateLookAt();
         int cameraLoc = glGetUniformLocation(ShaderProgram, "camera");
-        glUniformMatrix4fv(cameraLoc, 1, GL_TRUE, LookAt.getData());
+        glUniformMatrix4fv(cameraLoc, 1, GL_FALSE, LookAt.getData());
 
 
         Vectors::Matrix projMatrix = Vision::CreatePerspective(height, width, 100.0, 0.1, 45.0);
@@ -70,3 +74,25 @@ void Engine::setNewSize(unsigned int h, unsigned int w){
     height = h;
     width = w;
 }
+
+
+void Engine::mouseCallBack(){
+    
+    glfwGetCursorPos(window,&xpos,&ypos);
+
+    if(firstMouse){
+        lastXpos = xpos;
+        lastYpos = ypos;
+        firstMouse = false;
+    }
+
+    dx = (xpos - lastXpos)*sensivity;
+    dy = (ypos - lastYpos)*sensivity;
+
+    lastXpos = xpos;
+    lastYpos = ypos;
+
+    // std::cout << dx << ' ' << dy << std::endl;
+
+    // glfwSetCursorPos(window,width/2,height/2);
+}   

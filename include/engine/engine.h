@@ -20,12 +20,28 @@ class Engine{
                                  "FragColor = vertexColor;"
                                  "}\0";
 
+
+    float sensivity = 0.2;
+
     int height;
     int width;
     unsigned int fragmentShader;
     unsigned int vertexShader;
     unsigned int ShaderProgram;
     GLFWwindow* window;
+
+
+    double xpos;
+    double ypos;
+
+    double lastXpos;
+    double lastYpos;
+    double dx;
+    double dy;
+    bool firstMouse;
+
+
+    void mouseCallBack();
     
     // virtual void framebuffer_size_callback(GLFWwindow* window, int width, int height);
     public:

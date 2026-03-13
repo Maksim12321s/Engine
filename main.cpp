@@ -31,6 +31,11 @@ int main(){
     }
     glViewport(0,0,WIDTH,HEIGHT);
     glEnable(GL_DEPTH_TEST);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    if (glfwRawMouseMotionSupported()) {
+        glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+    }
+    glfwSetCursorPos(window,WIDTH/2,HEIGHT/2);
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
